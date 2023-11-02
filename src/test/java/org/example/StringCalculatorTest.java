@@ -23,9 +23,16 @@ class StringCalculatorTest {
     }
 
     @Test
-    void sum_value_when_the_string_has_more_values() {
+    void sum_value_when_the_string_has_two_values() {
         int result = stringCalculator.add("1,2");
 
         assertEquals(3, result);
+    }
+
+    @Test
+    void sum_value_when_the_string_has_more_values() {
+        int result = stringCalculator.add("1,2,3");
+
+        assertEquals(6, result);
     }
 }
