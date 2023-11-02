@@ -2,6 +2,8 @@ package org.example;
 
 import java.util.List;
 
+import static java.util.Arrays.asList;
+
 public class StringCalculator {
 
     public int add(String numbers) throws Exception {
@@ -10,22 +12,11 @@ public class StringCalculator {
 
         int result = 0;
         for (int number : numsArray) {
-            if (isNegativeNumber(number)) {
-                throw new Exception("negatives not allowed: " + number);
-            }
-            if (isBigNumbers(number)) {
-                continue;
+            for (Rule rule : asList(new NegativeNumberRule(), new BigNumbersRule())) {
+                number = rule.execute(number);
             }
             result += number;
         }
         return result;
-    }
-
-    private boolean isNegativeNumber(int number) {
-        return number < 0;
-    }
-
-    private boolean isBigNumbers(int number) {
-        return number >= 1000;
     }
 }
