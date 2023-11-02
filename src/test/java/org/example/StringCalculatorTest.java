@@ -9,10 +9,16 @@ class StringCalculatorTest {
     private final StringCalculator stringCalculator = new StringCalculator();
 
     @Test
-    void
-    zero_value_when_the_string_value_is_empty() {
+    void zero_value_when_the_string_value_is_empty() {
         int result = stringCalculator.add("");
 
         assertEquals(0, result);
+    }
+
+    @Test
+    void sum_value_when_the_string_has_single_value() {
+        int result = stringCalculator.add("1");
+
+        assertEquals(1, result);
     }
 }
