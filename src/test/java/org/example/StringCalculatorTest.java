@@ -35,4 +35,18 @@ class StringCalculatorTest {
 
         assertEquals(6, result);
     }
+
+    @Test
+    void handle_new_line_delimiter_with_two_values() {
+        int result = stringCalculator.add("1\n2");
+
+        assertEquals(3, result);
+    }
+
+    @Test
+    void handle_new_line_delimiter() {
+        int result = stringCalculator.add("1\n2,3");
+
+        assertEquals(6, result);
+    }
 }
