@@ -49,4 +49,11 @@ class StringCalculatorTest {
 
         assertEquals(6, result);
     }
+
+    @Test
+    void handle_dynamic_delimiters() {
+        int result = stringCalculator.add("//;\n1;2");
+
+        assertEquals(3, result);
+    }
 }
