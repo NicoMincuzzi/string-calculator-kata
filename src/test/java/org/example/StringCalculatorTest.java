@@ -63,4 +63,11 @@ class StringCalculatorTest {
         Exception exception = assertThrows(Exception.class, () -> stringCalculator.add("1,4,-1"));
         assertEquals("negatives not allowed: -1", exception.getMessage());
     }
+
+    @Test
+    void ignore_big_numbers() throws Exception {
+        int result = stringCalculator.add("//;\n1;1000");
+
+        assertEquals(1, result);
+    }
 }

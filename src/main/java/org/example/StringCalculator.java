@@ -16,6 +16,9 @@ public class StringCalculator {
             if (isNegativeNumber(number)) {
                 throw new Exception("negatives not allowed: " + number);
             }
+            if(isBigNumbers(number)){
+                continue;
+            }
             result += number;
         }
         return result;
@@ -44,5 +47,9 @@ public class StringCalculator {
 
     private boolean isNegativeNumber(int number) {
         return number < 0;
+    }
+
+    private boolean isBigNumbers(int number) {
+        return number >= 1000;
     }
 }
