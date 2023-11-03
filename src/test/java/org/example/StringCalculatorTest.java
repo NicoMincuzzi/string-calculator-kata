@@ -4,13 +4,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 class StringCalculatorTest {
 
-    ILogger logger = mock(ILogger.class);
-    private final StringCalculator stringCalculator = new StringCalculator(logger);
+    private final ILogger logger = mock(ILogger.class);
+    private final IWebService webService = mock(IWebService.class);
+    private final StringCalculator stringCalculator = new StringCalculator(logger, webService);
 
     @Test
     void zero_value_when_the_string_value_is_empty() throws Exception {
@@ -79,5 +81,15 @@ class StringCalculatorTest {
         int result = stringCalculator.add("//;\n1;1000");
 
         verify(logger).write(String.valueOf(result));
+    }
+
+    @Test
+    void send_notify_to_web_service_when_logging_fail() throws Exception {
+        doThrow(new LoggerException("Cannot log the result")).when(logger).write("1");
+
+        int result = stringCalculator.add("//;\n1;1000");
+
+        verify(webService).notify("Cannot log the result");
+        assertEquals(1, result);
     }
 }
