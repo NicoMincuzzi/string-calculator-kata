@@ -4,10 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class StringCalculatorTest {
 
-    private final StringCalculator stringCalculator = new StringCalculator();
+    ILogger logger = mock(ILogger.class);
+    private final StringCalculator stringCalculator = new StringCalculator(logger);
 
     @Test
     void zero_value_when_the_string_value_is_empty() throws Exception {
@@ -69,5 +72,12 @@ class StringCalculatorTest {
         int result = stringCalculator.add("//;\n1;1000");
 
         assertEquals(1, result);
+    }
+
+    @Test
+    void result_logging() throws Exception {
+        int result = stringCalculator.add("//;\n1;1000");
+
+        verify(logger).write(String.valueOf(result));
     }
 }
