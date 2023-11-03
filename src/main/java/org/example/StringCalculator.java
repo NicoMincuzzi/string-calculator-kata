@@ -15,23 +15,28 @@ public class StringCalculator {
         this.webService = webService;
     }
 
-    public int add(String numbers) throws Exception {
+    public int add(String sentence) throws Exception {
         int result = 0;
         try {
-            Delimiters delimiters = new Delimiters(numbers);
-            List<Integer> numsArray = new Numbers(numbers).retrieveSplittingBy(delimiters);
+            Delimiters delimiters = new Delimiters(sentence);
+            List<Integer> numbers = new Numbers(sentence).retrieveSplittingBy(delimiters);
 
-
-            for (int number : numsArray) {
-                for (Rule rule : asList(new NegativeNumberRule(), new BigNumbersRule())) {
-                    number = rule.execute(number);
-                }
-                result += number;
-            }
+            result = calculateSum(numbers);
 
             logger.write(valueOf(result));
         } catch (LoggerException e) {
             webService.notify(e.getMessage());
+        }
+        return result;
+    }
+
+    private int calculateSum(List<Integer> numbers) throws Exception {
+        int result = 0;
+        for (int number : numbers) {
+            for (Rule rule : asList(new NegativeNumberRule(), new BigNumbersRule())) {
+                number = rule.execute(number);
+            }
+            result += number;
         }
         return result;
     }
